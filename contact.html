@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="gbk" />
+	<title>Fish's Garden鱼花园</title>
+	<script src="script02.js"></script>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300|Open+Sans:700" />
+		<link rel="stylesheet" href="css/FishGarden.css" />
+	<style type = "text/css"> 
+	body
+	{ 
+		background-image: url('img/bg.jpg'); 
+		background-repeat: no-repeat; 
+		background-attachment:fixed;
+		background-position: bottom right;
+	}
+	banner
+	{
+		border: medium double rgb(250,0,255);
+		position:fixed;
+		width:200px;
+		height:200px;
+		left:5%;
+		top:5px;
+		overflow:hidden;
+	}
+	/*MAIN CONTENT*/
+	.page
+	{
+		max-width:1080px;
+	}
+	
+</style>
+<script type="text/javascript">
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+
+</head>
+
+<body onload="MM_preloadImages('images/qian12.jpg','images/qian22.jpg','images/qian32.jpg')"> 
+<div class="page">
+	<!-- ==== START MASTHEAD ==== -->
+	<header class="masthead" role="banner">
+		<p class="logo"><a href="/"><img src="img/logo.png" alt="Fish Garden" /></a></p>
+		<p class = "logotext">欢迎来到鱼の游园会</p>
+		<ul class="social-sites">
+			<li><a href="http://www.facebook.com">f</a></li>
+			<li><a href="http://www.twitter.com">t</a></li>
+			<li><a href="http://www.flickr.com">n</a></li>
+		</ul>
+
+		<nav role="navigation">
+			<ul class="nav-main">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="homework.html">Homework</a></li>
+				<li><a href="contact.html" class="current-page">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+	<!-- end masthead -->
+
+	<div class="container clearfix">
+	<!-- ==== START MAIN ==== -->
+	<main role="main">
+		<section class="post">
+			<h1 class = "articletitle"><a href = "http://www.baidu.com">我の联系方式</a></h1>
+			<p style = "font-size:30px"><img src="img/phone.png" alt=""  />:18800160573</p>
+			<p style = "font-size:30px"><img src="img/email.png" alt=""  />:yaoxiaoqi77@gmail.com</p>
+			<p style = "font-size:30px"><img src="img/wechat.png" alt=""  />:Perisama</p>
+			<p style = "font-size:30px"><img src="img/weibo.png" alt=""  /><a href = "http://weibo.com">:妖精Sama_Severn酱</p>
+			<footer class="footer">
+				<p class="post-footer"></p>
+			</footer>
+		</section>
+
+	</main>
+	<!-- end main -->
+
+	<!-- ==== START SIDEBAR ==== -->
+	<div class="sidebar">
+		<article class="about">
+			<h2>About Me</h2>
+
+			<img src="img/about.jpg" alt="" />
+			
+			<p>张育萌。软件31班。喜欢所有美好的事（食）物。流在血管里50%的血液是冷的。轻微外貌协会，无关乎感情，只关乎美感，最近有些沉迷换装游戏。近日喜欢的一句话是,"Brain is good.Hope everyone had one."想要成为一枚棒棒哒程序媛。</p>
+		</article>
+
+		<aside class="mod">
+			<h2>Recently Liked</h2>
+
+			<ul class="links">
+			    <li><a href="#" class="more">奇奇怪怪的漫畫</a></li>
+			    <li><a href="http://www.bilibili.com/" class="more">BiliBili~乾杯</a></li>
+			    <li><a href="http://learn.tsinghua.edu.cn/" class="more">Tsinghua網絡學堂</a></li>
+			</ul>
+		</aside>
+	</div>
+	<!-- end sidebar -->
+	</div>
+	<!-- end container -->
+
+	<!-- ==== START PAGE FOOTER ==== -->
+	<footer role="contentinfo" class="footer">
+		<p class="legal"><small>&copy; 2015 Fish's Garden. All Rights Reserved.</small></p>
+	</footer>
+	<!-- end page footer -->
+</div> <!-- end page -->
+</body>
+</html>

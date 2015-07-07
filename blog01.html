@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="gbk" />
+	<title>Fish's Garden鱼花园</title>
+	<script src="script02.js"></script>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300|Open+Sans:700" />
+		<link rel="stylesheet" href="css/FishGarden.css" />
+	<style type = "text/css"> 
+	body
+	{ 
+		background-image: url('img/bg.jpg'); 
+		background-repeat: no-repeat; 
+		background-attachment:fixed;
+		background-position: bottom right;
+	}
+	banner
+	{
+		border: medium double rgb(250,0,255);
+		position:fixed;
+		width:200px;
+		height:200px;
+		left:5%;
+		top:5px;
+		overflow:hidden;
+	}
+	/*MAIN CONTENT*/
+	.page
+	{
+		max-width:1080px;
+	}
+	
+</style>
+<script type="text/javascript">
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+
+</head>
+
+<body onload="MM_preloadImages('images/qian12.jpg','images/qian22.jpg','images/qian32.jpg')"> 
+<div class="page">
+	<!-- ==== START MASTHEAD ==== -->
+	<header class="masthead" role="banner">
+		<p class="logo"><a href="/"><img src="img/logo.png" alt="Fish Garden" /></a></p>
+		<p class = "logotext">欢迎来到鱼の游园会</p>
+		<ul class="social-sites">
+			<li><a href="http://www.facebook.com"><span data-icon="0xe801" aria-hidden="true"></span></a></li>
+			<li><a href="http://www.twitter.com">t</a></li>
+			<li><a href="http://www.flickr.com">n</a></li>
+		</ul>
+
+		<nav role="navigation">
+			<ul class="nav-main">
+				<li><a href="index.html" class="current-page">Home</a></li>
+				<li><a href="homework.html">Homework</a></li>
+				<li><a href="contact.html">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+	<!-- end masthead -->
+
+	<div class="container clearfix">
+	<!-- ==== START MAIN ==== -->
+	<main role="main">
+		<section class="post">
+			<h1 class = "articletitle"><a href = "www.baidu.com">对Web前端课的一些小期待</a></h1>
+
+			<img src="img/blog01.jpg" alt="" class="post-photo-full" />
+
+			<div class="post-blurb">
+				<p>作为女生，总是对于设计类的东西有很大的兴趣。也很喜欢软软萌萌感觉的个人主页。不过这次的个人主页尝试了极简风呢~希望助教喜欢这样的风格<s>（我才不承认是因为时间不够了呢~）</s>主色调采用了绿色，希望能给炎热的夏日带来一阵breeze，就像是抹茶冰激凌一样清新爽口~所谓个人主页就是要展现个人的风格吧~所以我也用了很多软萌的图片哟O(∩_∩)O，并且特别感谢猿先生在我写作业期间的陪伴哟~ </p>
+				<p>我一直以来都对前端开发很感兴趣，也认真地考虑过要不要成为一个前端程序媛。我知道现在很多人都对前端工程师这个岗位有很多的误解。知乎也戏称前端有一颗越长越歪还很粗壮的技能树。课上助教也讲过，虽然入门很简单，但是前端工程师的工作可没有看起来那么easy！</p>
+				<p>而且，与很多行业不同，程序员是一个一辈子都在学习的职业，前端工程师更甚。这个职业要求你得不断地学习、成长，想想现在与五年前相比，HTML发生了多么翻天覆地的变化。这个信息量巨大，更新速度超快的行业，对从业者是一个很大的挑战。但是web前端所开发出的代码，能够马上看到，这是非常有成就感的事！把网页做的酷炫狂拽霸，也能让人成就感大大的~</p>
+				<p>希望老师们可以给我们介绍一些基础的东西，毕竟对于JS、CSS零基础的同学还是蛮多的(只有你一个吧><)。并且在这个基础上能给我们介绍一些最新鲜最前沿的前端知识就更棒了~！</p>
+			</div>
+
+			<footer class="footer">
+				<p class="post-footer">Posted in <a href="http://info.tsinghua.edu.cn/">Tsinghua University,</a> <time datetime="2015-07-07T21:00" class="pubdate">July 07, 2015 at 21:00</time></p>
+			</footer>
+		</section>
+
+	</main>
+	<!-- end main -->
+
+	<!-- ==== START SIDEBAR ==== -->
+	<div class="sidebar">
+		<article class="about">
+			<h2>About Me</h2>
+
+			<img src="img/about.jpg" alt="" />
+			
+			<p>张育萌。软件31班。喜欢所有美好的事（食）物。流在血管里50%的血液是冷的。轻微外貌协会，无关乎感情，只关乎美感，最近有些沉迷换装游戏。近日喜欢的一句话是,"Brain is good.Hope everyone had one."想要成为一枚棒棒哒程序媛。</p>
+		</article>
+
+		<aside class="mod">
+			<h2>Recently Liked</h2>
+
+			<ul class="links">
+			    <li><a href="http://www.webtoons.com/zh-hans/thriller/tales-of-the-unusual/list?title_no=296" class="more">奇奇怪怪的漫畫</a></li>
+			    <li><a href="http://www.bilibili.com/" class="more">BiliBili~乾杯</a></li>
+			    <li><a href="http://learn.tsinghua.edu.cn/" class="more">Tsinghua網絡學堂</a></li>
+			</ul>
+		</aside>
+	</div>
+	<!-- end sidebar -->
+	</div>
+	<!-- end container -->
+
+	<!-- ==== START PAGE FOOTER ==== -->
+	<footer role="contentinfo" class="footer">
+		<p class="legal"><small>&copy; 2015 Fish's Garden. All Rights Reserved.</small></p>
+	</footer>
+	<!-- end page footer -->
+</div> <!-- end page -->
+</body>
+</html>
