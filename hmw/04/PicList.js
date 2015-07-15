@@ -1,0 +1,20 @@
+var piclist = [
+{"name":"test1","url":"img/0.jpg"},
+{"name":"test2","url":"img/0(2).jpg"},
+{"name":"test3","url":"img/0(3).jpg"},
+{"name":"test4","url":"img/0(4).jpg"},
+{"name":"test5","url":"img/0(5).jpg"},
+{"name":"test6","url":"img/0(6).jpg"},
+{"name":"test7","url":"img/0(7).jpg"},
+{"name":"test8","url":"img/0(8).jpg"},
+{"name":"test9","url":"img/0(9).jpg"},
+{"name":"test10","url":"img/0(10).jpg"},
+{"name":"test11","url":"img/0(11).jpg"},
+{"name":"test11","url":"img/0(12).jpg"},
+{"name":"test11","url":"img/0(13).jpg"},
+{"name":"test11","url":"img/0(14).jpg"},
+{"name":"test11","url":"img/0(15).jpg"},
+{"name":"test11","url":"img/0(16).jpg"},
+{"name":"test11","url":"img/0(17).jpg"},
+{"name":"test11","url":"img/0(18).jpg"}
+];

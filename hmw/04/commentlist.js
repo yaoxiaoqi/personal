@@ -1,0 +1,21 @@
+var commentlist = [
+{"name":"妖小七","content":"lots of fun:-DDD"},
+{"name":"妖小喵","content":"handsome!"},
+{"name":"妖小汪","content":"dokidoki的感觉呢~"},
+{"name":"妖小轩","content":"鸭子君真是呆萌"},
+{"name":"妖小倩","content":"蜜汁感动...鸭子君不能飞T^T"},
+{"name":"妖小陌","content":"鱼鹰真是帅呀"},
+{"name":"妖小苏","content":"我来发射弹幕~"},
+{"name":"妖小墨","content":"这三只鸟好像天真小哥和胖子"},
+{"name":"妖小卿","content":"中间无口的那只23333"},
+{"name":"妖小朵","content":"一口气看完真爽！"},
+{"name":"妖小年","content":"阿婆主辛苦咯~"},
+{"name":"妖小鸭","content":"呱呱~"},
+{"name":"妖小啾","content":"呱呱~"},
+{"name":"妖小雪","content":"呱呱~"},
+{"name":"妖小球","content":"呱呱~"},
+{"name":"倾城","content":"离宫别馆，次第兴筑。远望这靡靡景象，似乎能听到心碎的哀鸣。"},
+{"name":"千草の绿","content":"呱呱~"},
+{"name":"霓裳羽衣","content":"呱呱~"},
+{"name":"妖小球","content":"呱呱~"}
+];

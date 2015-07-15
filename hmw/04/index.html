@@ -1,0 +1,516 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DuckDuck</title>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/zoom.css">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300|Open+Sans:700" />
+<style>
+body{ margin:0; padding:0;}
+ul{ margin:0; padding:0; list-style:none;}
+.clear{ clear:both;}
+
+div.gallery li {
+cursor: pointer;
+transition: opacity 2s;
+opacity: 0.7;
+}
+div.gallery li:hover {
+opacity: 1;
+transition-duration: 0s;
+}
+
+@media screen and (max-width:1279px){
+	.gallery{ width:990px; margin:0 auto;}
+	.item{ width:300px; margin:5px; float:left;}
+	.item img{ width:320px;}
+}
+@media screen and (min-width:1280px){ 
+	.gallery{ width:1275px; margin:0 auto;}
+	.item{ width:400px; padding:5px; float:left;border: 1px solid #ccc;box-shadow: 0 0 6px #ccc;border-radius: 5px;}
+	.item img{ width:390px;margin:5px;}
+} 
+</style>
+<script type = "text/javascript" src="PicList.js"></script>
+<script type = "text/javascript" src="commentlist.js"></script>
+<script type = "text/javascript">
+	var cnt = 0; //计数变量
+	var flag = true;
+	var arr = new Array();
+	
+	//获取地理位置相关数组
+    var longitude = new Array();
+    var latitude = new Array();
+    var distance = new Array();
+	
+	for(var i = 0;i < commentlist.length;i++){
+		arr.push(i);
+	}
+	var imgArray = new Array();
+	for(var i = 0;i < piclist.length;i++){
+		imgArray[i] = document.createElement("img");
+		imgArray[i].src = piclist[i].url;
+		//imgArray[i].alt = piclist[i].name; 
+		//imgArray[i].style.width = imgWidth;
+	}
+	//添加初始图片，一行显示3张图片
+	function addpic(){
+		var ulist = document.getElementById("ulist");
+		for (cnt = 0; cnt < 11; cnt++) {
+			ulist.appendChild(addDiv(cnt));
+		}
+	}
+	//实现自然的瀑布流
+	function loadImg() {
+		var ulist = document.getElementById("ulist");
+		var aPin = getClassObj(ulist,"item"); //找到所有className为item的图片
+		var ipinW= aPin[0].offsetWidth;
+		var pinHArr=[]; //每一列图片高度总和的数组
+		for(var i=0;i<aPin.length;i++){
+			var pinH = aPin[i].offsetHeight;
+			if(i < 3){
+				pinHArr[i]=pinH;
+			}else{
+				var minH = Math.min.apply(null,pinHArr); 
+				var minHIndex = getminHIndex(pinHArr,minH); //找到最小高度的图片，将新图片放在其下面
+				aPin[i].style.position='absolute'; //设置绝对位置
+			    aPin[i].style.top=minH+'px';
+			    aPin[i].style.left=aPin[minHIndex].offsetLeft+'px';
+				pinHArr[minHIndex]+= aPin[i].offsetHeight;
+			}
+		}	
+	}
+	//鼠标悬停效果
+
+	//点击小图查看大图的代码
+	function jq(){
+		(function(e) { //event
+			function u(u) {
+				function c() {
+					function h(e) {
+						e.show();
+						n.removeClass("loading")
+					}
+					var t = e(this),
+					r = parseInt(n.css("borderLeftWidth")),
+					i = s - r * 2,
+					u = o - r * 2,
+					a = t.width(),
+					f = t.height();
+					if (a == n.width() && a <= i && f == n.height() && f <= u) {
+						h(t);
+						return
+					}
+            if (a > i || f > u) {
+                var l = u < f ? u: f,
+                c = i < a ? i: a;
+                if (l / f <= c / a) {
+                    t.width(a * l / f);
+                    t.height(l)
+                } else {
+                    t.width(c);
+                    t.height(f * c / a)
+                }
+            }
+            n.animate({ //动画效果
+                width: t.width(),
+                height: t.height(),
+                marginTop: -(t.height() / 2) - r,
+                marginLeft: -(t.width() / 2) - r
+            },
+            200,
+            function() {
+                h(t)
+            })
+        }
+        if (u) u.preventDefault();
+        var a = e(this),
+        f = a.attr("href");
+        if (!f) return;
+        var l = e(new Image).hide();
+        e("#zoom .previous, #zoom .next").show();
+        if (a.hasClass("zoom")) e("#zoom .previous, #zoom .next").hide();
+        if (!r) {
+            r = true;
+            t.show();
+            e("body").addClass("zoomed")
+        }
+        n.html(l).delay(500).addClass("loading");
+        l.load(c).attr("src", f);
+        i = a;
+    }
+
+    function a() {
+        var t = i.parent("li").prev();
+        if (t.length == 0) t = e(".gallery li:last-child");
+        t.find("a").trigger("click")
+
+    }
+    function f() {
+        var t = i.parent("li").next();
+        if (t.length == 0) t = e(".gallery li:first-child");
+        t.children("a").trigger("click")
+    }
+    function l(s) {
+        if (s) s.preventDefault();
+        r = false;
+        i = null;
+        t.hide();
+        e("body").removeClass("zoomed");
+        n.empty();
+		if($(".commentcontent").size() > 5){
+			for(var i = 0;i<$(".commentcontent").size();i++){
+				if (i < 5) e("#zoom .commentcontent:eq("+i+")").show();
+				else e("#zoom .commentcontent:eq("+i+")").hide();
+			}
+		}
+    }
+    function c() {
+        s = e(window).width();
+        o = e(window).height()
+    }
+
+	//加入评论
+	function addComment(parent,num){
+		arr.sort(randomsort);
+		if(num < 6){
+			for(var i = 0;i < num;i++){
+				var name = $("<p></p>").text(commentlist[arr[i]].name);
+				var content = $("<p style = \"font-size:18px;position:relative;left:20px;\"></p>").text(commentlist[arr[i]].content);
+				var txt = "<span>——————————————————————</span>";
+				parent.append(name,content,txt);
+			}
+			var nav = $("<div class = \"nav\"></div>");
+			parent.append(nav);
+			var pg1 = document.createElement("a");
+			pg1.href = "#";
+			pg1.className = "page";
+			pg1.innerHTML = "1";
+			nav.append(pg1);
+		}
+		else if(num < 11){
+			var page = 1;
+			for(var i = 0;i < num;i++){
+				var cmt = $("<div class = \"commentcontent\"></div>")
+				var name = $("<p></p>").text(commentlist[arr[i]].name);
+				var content = $("<p style = \"font-size:18px;position:relative;left:20px;\"></p>").text(commentlist[arr[i]].content);
+				var txt = "<span>——————————————————————</span>";
+				parent.append(cmt);
+				cmt.append(name,content,txt);
+			}
+			var nav = $("<div class = \"nav\"></div>");
+			parent.append(nav);
+			var pg1 = document.createElement("a");
+			pg1.href = "#";
+			pg1.className = "page";
+			pg1.innerHTML = "1";
+			pg1.onclick = function(){
+				for(var i = 0;i < num;i++){
+					if(i < 5)  e("#zoom .commentcontent:eq("+i+")").show();
+					else e("#zoom .commentcontent:eq("+i+")").hide();
+				}
+			};
+			nav.append(pg1);
+			var pg2 = document.createElement("a");
+			pg2.href = "#";
+			pg2.className = "page";
+			pg2.innerHTML = "2";
+			pg2.onclick =  function(){for(var i = 0;i < num;i++){
+					if(i < 5)  e("#zoom .commentcontent:eq("+i+")").hide();
+					else e("#zoom .commentcontent:eq("+i+")").show();
+				}};
+			nav.append(pg2);
+			if(page == 1){
+				for(var i = 0;i < num;i++){
+					if(i < 5)  e("#zoom .commentcontent:eq("+i+")").show();
+					else e("#zoom .commentcontent:eq("+i+")").hide();
+				}
+			}
+		}
+		else{
+			var page = 1;
+			for(var i = 0;i < num;i++){
+				var cmt = $("<div class = \"commentcontent\"></div>")
+				var name = $("<p></p>").text(commentlist[arr[i]].name);
+				var content = $("<p style = \"font-size:18px;position:relative;left:20px;\"></p>").text(commentlist[arr[i]].content);
+				var txt = "<span>——————————————————————</span>";
+				parent.append(cmt);
+				cmt.append(name,content,txt);
+			}
+			var nav = $("<div class = \"nav\"></div>");
+			parent.append(nav);
+			var pg1 = document.createElement("a");
+			pg1.href = "#";
+			pg1.className = "page";
+			pg1.innerHTML = "1";
+			pg1.onclick = function(){
+				for(var i = 0;i < num;i++){
+					if(i < 5)  e("#zoom .commentcontent:eq("+i+")").show();
+					else e("#zoom .commentcontent:eq("+i+")").hide();
+				}
+			};
+			nav.append(pg1);
+			var pg2 = document.createElement("a");
+			pg2.href = "#";
+			pg2.className = "page";
+			pg2.innerHTML = "2";
+			pg2.onclick =  function(){for(var i = 0;i < num;i++){
+					if(i>=5 && i<10)  e("#zoom .commentcontent:eq("+i+")").show();
+					else e("#zoom .commentcontent:eq("+i+")").hide();
+				}};
+			nav.append(pg2);
+			var pg3 = document.createElement("a");
+			pg3.href = "#";
+			pg3.className = "page";
+			pg3.innerHTML = "3";
+			pg3.onclick =  function(){for(var i = 0;i < num;i++){
+					if(i>=10 && i<15)  e("#zoom .commentcontent:eq("+i+")").show();
+					else e("#zoom .commentcontent:eq("+i+")").hide();
+				}};
+			nav.append(pg3);
+			if(page == 1){
+				for(var i = 0;i < num;i++){
+					if(i < 5)  e("#zoom .commentcontent:eq("+i+")").show();
+					else e("#zoom .commentcontent:eq("+i+")").hide();
+				}
+			}
+		}
+		
+	}
+	//检测id为zoom的元素数量，若大于0，则清空，再加入新元素
+	if($('[id=zoom]').size() > 0)
+	{
+		$('[id=zoom]').each(function(){$('[id=zoom]').remove();});
+		e("body").append('<div id="zoom"><a class="close"></a><a href="#previous" class="previous"></a><a href="#next" class="next"></a><div class="content loading"></div></div>');
+		//添加评论，随机从评论list中获取评论
+		var commentdiv = document.createElement("div");
+		commentdiv.className = "comment";
+		commentdiv.id = "commentdiv";
+		$("#zoom").append(commentdiv);
+		addComment($("#commentdiv"),15);
+	}
+	//否则，直接加入新元素
+	else{
+		e("body").append('<div id="zoom"><a class="close"></a><a href="#previous" class="previous"></a><a href="#next" class="next"></a><div class="content loading"></div></div>');
+		//添加评论，随机从评论list中获取评论
+		var commentdiv = document.createElement("div");
+		commentdiv.className = "comment";
+		commentdiv.id = "commentdiv";
+		$("#zoom").append(commentdiv);
+		addComment($("#commentdiv"),10);
+	}
+    var t = e("#zoom").hide(),
+    n = e("#zoom .content"),
+    r = false,
+    i = null,
+    s = e(window).width(),
+    o = e(window).height(); (function() {
+        t.on("click",
+        function(t) {
+            t.preventDefault();
+            if (e(t.target).attr("id") == "zoom") l()
+        });
+        e("#zoom .close").on("click", l);
+        e("#zoom .previous").on("click", a);
+        e("#zoom .next").on("click", f);
+        e(document).keydown(function(e) {
+            if (!i) return;
+            if (e.which == 38 || e.which == 40) e.preventDefault();
+            if (e.which == 27) l();
+            if (e.which == 37 && !i.hasClass("zoom")) a();
+            if (e.which == 39 && !i.hasClass("zoom")) f()
+        });
+        if (e(".gallery li a").length == 1) e(".gallery li a")[0].addClass("zoom");
+        e(".zoom, .gallery li a").on("click", u)
+    })(); (function() {
+        e(window).on("resize", c)
+    })(); (function() {
+        e(window).on("mousewheel DOMMouseScroll",
+        function(e) {
+            if (!i) return;
+            e.stopPropagation();
+            e.preventDefault();
+            e.cancelBubble = false
+        })
+    })();
+})(jQuery);
+	}
+	//随机排序
+	function randomsort(a, b) {
+		return Math.random()>.5 ? -1 : 1;//用Math.random()函数生成0~1之间的随机数与0.5比较，返回-1或1
+	}
+	
+	//获取当前最小高度的图片的index
+	function getminHIndex(arr,min){
+		for(var i=0;i<arr.length;i++){
+			if(arr[i] == min){
+				return i;
+			}
+		}
+	}
+	
+	//在parent的子元素中找到所有类名为className的图片
+	function getClassObj(parent,className){
+		obj = parent.getElementsByTagName("li");
+		var pinS = [];
+		for(var i=0;i<obj.length;i++){
+			if(obj[i].className==className){
+				pinS.push(obj[i]);
+			}
+		};
+		return pinS;
+	}
+	
+	//添加结点
+	function addDiv(num) {
+		//超链接层 
+		var bigPic = document.createElement("a");
+		bigPic.href = piclist[num].url;
+		bigPic.id = "img"+num;
+		//包含img的层
+		var img = document.createElement("img");;
+		img.src = piclist[num].url;
+		var textdiv = document.createElement("div"); //用于在图片下方添加地理位置
+		//alert(typeof(distance[num]));
+		if(typeof(distance[num]) == "undefined"){
+			textdiv.innerHTML = "未能获取地理位置";
+		}
+		else{textdiv.innerHTML = distance[num];}
+		var li = document.createElement("li"); 
+		li.className = "item"; 
+		li.appendChild(bigPic);  //加入超链接
+		li.appendChild(textdiv);
+		bigPic.appendChild(img); //加入图片
+		return li; 
+	}
+	
+	//检测滚动
+	function checkscrollside(){
+        var oParent = document.getElementById('ulist');
+        var aPin = getClassObj(oParent,'item');
+        var lastH=aPin[aPin.length-1].offsetTop+Math.floor(aPin[aPin.length-1].offsetHeight/2);
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop ;
+        var winH = document.documentElement.clientHeight;
+        return (lastH< scrollTop+winH) ? true : false; 
+    }
+	
+	//获取要异步加载的图片
+	function getmore(){
+		if(cnt > piclist.length && flag){
+			alert("没有更多图片了");
+			flag = false;
+			//cnt = 0;
+		}
+		for(var i = 0; i < 6; i++){ 
+			if(cnt <= piclist.length){
+				var oParent = document.getElementById('ulist');
+				oParent.appendChild(addDiv(cnt++));
+				loadImg();
+				//addGlass();
+				jq();
+			}
+		}
+	}
+	
+			//获取地理位置
+	function getLocation(){
+		if(navigator.geolocation){
+			//浏览器支持geolocation
+			alert("gggg");
+			navigator.geolocation.getCurrentPosition(onSuccess);
+		}else{
+			alert("浏览器不支持getlocation");
+		}
+	}
+			   //成功时
+	function onSuccess(position){
+		//返回用户位置
+		//经度
+		alert("获取地理位置成功！");
+		var lng1 =position.coords.longitude;
+		//纬度
+		var lat1 = position.coords.latitude;
+		var xmlHttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHttp");
+		xmlHttp.open("get", "PicList.js?random=" + Math.random(), true);
+		xmlHttp.send();
+		xmlHttp.onreadystatechange = function () {
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+			 var result = xmlHttp.responseText;
+			 //使用eval函数使返回的字符串变成js对象
+			 var myPicture = eval("(" + result + ")");
+			 for (var i = 0; i < piclist.length; i++) {
+				var mPic = myPicture[i];
+				longitude[i] = parseFloat(mPic["lng"]);
+				latitude[i] = parseFloat(mPic["lat"]);
+			 }
+			 for (var i = 0; i < piclist.length; i++){
+				var radLat1 = rad(lat1);
+				var radLat2 = rad(latitude[i]);
+				var a = radLat1 - radLat2;
+				var b = rad(lng1) - rad(longitude[i]);
+				var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a/2),2) +Math.cos(radLat1)*Math.cos(radLat2)*Math.pow(Math.sin(b/2),2)));
+				s = s * 6371;
+				s = Math.round(s * 10000) / 10000;
+				s = s.toFixed(0);
+				distance[i] = "距您" + s + "千米";
+				var tt = "distance" + i;
+				if (document.getElementById(tt) != null)
+				{
+					document.getElementById(tt).innerHTML = distance[i];
+				}
+				console.log(s);
+			 }
+			}
+		}
+	}
+	function rad(d){
+		return d*3.14/180.0;
+	}
+	
+	//异步加载更多图片
+	window.onload = function(){
+		getLocation();
+		addpic();
+		loadImg();
+		jq();
+
+		
+		//滚动后异步加载新图片
+		window.onresize=function(){ loadImg();};
+		window.onscroll=function(){
+            if(checkscrollside()){
+				var xmlHttpReq = null; 
+				//IE浏览器使用ActiveX 
+				if (window.ActiveXObject){ 
+					xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP"); 
+				} 
+				//其它浏览器使用window的子对象XMLHttpRequest 
+				else if (window.XMLHttpRequest){ 
+					xmlHttpReq = new XMLHttpRequest(); 
+				} 
+				if (xmlHttpReq != null){ 
+					//设置请求（没有真正打开），true：表示异步 
+					xmlHttpReq.open("GET", "/ajaxtest", true); 
+					//设置回调，当请求的状态发生变化时，就会被调用，传递参数xmlHttpReq 
+					xmlHttpReq.onreadystatechange = function () { getmore(xmlHttpReq); }; 
+					//提交请求 
+					xmlHttpReq.send(null); 
+				}
+                
+            }
+			else{}
+
+        }
+	}
+</script>
+</head>
+<body>
+<div class="gallery">
+	<ul id = "ulist">
+    </ul>
+    <div class="clear"></div>
+</div>
+</body>
+</html>
