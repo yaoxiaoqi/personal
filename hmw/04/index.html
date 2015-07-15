@@ -418,7 +418,6 @@ transition-duration: 0s;
 	function getLocation(){
 		if(navigator.geolocation){
 			//浏览器支持geolocation
-			alert("gggg");
 			navigator.geolocation.getCurrentPosition(onSuccess);
 		}else{
 			alert("浏览器不支持getlocation");
@@ -492,7 +491,7 @@ transition-duration: 0s;
 				} 
 				if (xmlHttpReq != null){ 
 					//设置请求（没有真正打开），true：表示异步 
-					xmlHttpReq.open("GET", "/ajaxtest", true); 
+					xmlHttpReq.open("GET", "PicList.js?random=" + Math.random()", true); 
 					//设置回调，当请求的状态发生变化时，就会被调用，传递参数xmlHttpReq 
 					xmlHttpReq.onreadystatechange = function () { getmore(xmlHttpReq); }; 
 					//提交请求 
