@@ -8,7 +8,8 @@
 <link rel="stylesheet" type="text/css" href="css/zoom.css">
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300|Open+Sans:700" />
 <style>
-body{ margin:0; padding:0;}
+body{ margin:0; padding:0;
+background:url(images/bg.jpg) repeat;}
 ul{ margin:0; padding:0; list-style:none;}
 .clear{ clear:both;}
 
@@ -16,6 +17,7 @@ div.gallery li {
 cursor: pointer;
 transition: opacity 2s;
 opacity: 0.7;
+background-color:#ffffff;
 }
 div.gallery li:hover {
 opacity: 1;
@@ -30,7 +32,7 @@ transition-duration: 0s;
 @media screen and (min-width:1280px){ 
 	.gallery{ width:1275px; margin:0 auto;}
 	.item{ width:400px; padding:5px; float:left;border: 1px solid #ccc;box-shadow: 0 0 6px #ccc;border-radius: 5px;}
-	.item img{ width:390px;margin:5px;}
+	.item img{ width:390px;margin:5px;background-color:#ffffff;}
 } 
 </style>
 <script type = "text/javascript" src="PicList.js"></script>
@@ -375,7 +377,7 @@ transition-duration: 0s;
 		var textdiv = document.createElement("div"); //用于在图片下方添加地理位置
 		//alert(typeof(distance[num]));
 		if(typeof(distance[num]) == "undefined"){
-			textdiv.innerHTML = "未能获取地理位置";
+			textdiv.innerHTML = "";
 		}
 		else{textdiv.innerHTML = distance[num];}
 		var li = document.createElement("li"); 
@@ -507,7 +509,7 @@ transition-duration: 0s;
 </head>
 <body>
 <div class="gallery">
-	<ul id = "ulist">
+	<ul id = "ulist" class = "ulist">
     </ul>
     <div class="clear"></div>
 </div>
