@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html >
 <head>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
   <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/example.css">
@@ -17,72 +18,17 @@
   </div>
 
   <ul id='example-messages' class="example-chat-messages"></ul>
+  
+  <ul id = 'chat-namelist' class = 'chat-namelist'></ul>
 
   <footer>
-    <input type='text' id='messageInput'  placeholder='Type a message...'>
+    <input type='text' id='messageInput' class = 'textField'  placeholder='Type a message...'>
+	<input type ='button' class = 'sendButton' value = '发 射' />
   </footer>
 </div>
 
 <!-- CHAT JAVACRIPT -->
-<script>
-  // CREATE A REFERENCE TO FIREBASE
-  var messagesRef = new Firebase('https://popping-inferno-7997.firebaseio.com/');
-
-  // REGISTER DOM ELEMENTS
-  var messageField = $('#messageInput');
-  var nameField = $('#nameInput');
-  var messageList = $('#example-messages');
-
-  // LISTEN FOR KEYPRESS EVENT
-  messageField.keypress(function (e) {
-    if (e.keyCode == 13) {
-      //FIELD VALUES
-      var username = nameField.val();
-      var message = messageField.val();
-
-      //SAVE DATA TO FIREBASE AND EMPTY FIELD
-      messagesRef.push({name:username, text:message});
-      messageField.val('');
-    }
-  });
-
-  // Add a callback that is triggered for each chat message.
-  messagesRef. limitToLast(10).on('child_added', function (snapshot) {
-    //GET DATA
-    var data = snapshot.val();
-    var username = data.name || "anonymous";
-    var message = data.text;
-
-    //CREATE ELEMENTS MESSAGE & SANITIZE TEXT
-    var messageElement = $("<li>");
-    var nameElement = $("<strong class='example-chat-username'></strong>")
-    nameElement.text(username);
-    messageElement.text(message).prepend(nameElement);
-
-    //ADD MESSAGE
-    messageList.append(messageElement)
-
-    //SCROLL TO BOTTOM OF MESSAGE LIST
-    messageList[0].scrollTop = messageList[0].scrollHeight;
-  });
-  
-  //显示用户列表
-  messagesRef. namelist().on('child_added', function (snapshot){
-	//GET DATA
-    var data = snapshot.val();
-    var username = data.name || "anonymous";
-    var message = data.text; 
-	
-	var messageElement = $("<li>");
-    var nameElement = $("<strong class='example-chat-username'></strong>")
-    nameElement.text(username);
-    messageElement.prepend(nameElement);
-
-    //ADD MESSAGE
-    messageList.append(messageElement)
-
-  });
-</script>
+<script src = 'js/chat.js'></script>
 </body>
 </html>
 </html>

@@ -6,8 +6,8 @@
   display: none; }
 
 .l-demo-container {
-  width: 500px;
-  margin: 40px auto 0px auto; }
+  width: 700px;
+  margin: 40px auto 5px auto; }
 
 .l-popout {
   margin: 0;
@@ -29,7 +29,7 @@
   background-color: #dfe3ea;
   border: 1px solid #CCC;
   overflow: auto;
-  padding: 0px;
+  padding: 0px 0px 5px 0px;
   font-size: 18px;
   line-height: 22px;
   color: #666; }
@@ -53,10 +53,9 @@
     -webkit-box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2);
     box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.2);
     border-radius: 3px;
-    padding: 0px 10px;
+    padding: 10px;
     height: 30px;
     font-size: 18px;
-    width: 100%;
     font-weight: normal;
     outline: none; }
   .example-chat .example-chat-toolbar {
@@ -85,8 +84,10 @@
   .example-chat ul {
     list-style: none;
     margin: 0px;
+	float:right;
     padding: 20px;
-    height: 200px;
+    height: 300px;
+	width:450px;
     overflow: auto; }
     .example-chat ul li {
       margin-bottom: 10px;
@@ -95,13 +96,32 @@
         margin: 0px; }
     .example-chat ul .example-chat-username {
       margin-right: 10px; }
+	.example-chat ul .chat-face{
+		height:40px;
+		width:40px;
+	}
+   .example-chat .chat-namelist{
+		background-color:#393434;
+		color:white;
+		float:left;
+		width:150px;
+	}
   .example-chat footer {
     display: block;
     padding: 10px; }
     .example-chat footer input {
+	  float:left;
       border: 1px solid #ced3db;
-      height: 40px; }
-
+      height: 40px;
+	  }
+	.example-chat .textField{
+		width:550px;
+	}
+	.example-chat .sendButton{
+		font-family:"Microsoft YaHei";
+		width:120px;
+	}
+	
 #colorholder {
   width: 480px;
   height: 30px;
