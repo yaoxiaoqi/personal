@@ -21,7 +21,6 @@ Bridge.Preloader.prototype = {
 		this.load.audio('fallwater','music/fallwater.wav');
 		
 		//需要动画的放这里！
-        //this.load.spritesheet('monster-idle','img/monster-idle.png', 103, 131);
 		this.load.spritesheet('button-restart','img/button-restart.png', 363, 131);
         this.load.spritesheet('button-start','img/button-start.png', 401, 143);
 		this.load.spritesheet('chick','img/chick.png',186,152);

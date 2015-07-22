@@ -1,7 +1,7 @@
 Bridge.Game = function(game){
 	this._player = null; //玩家
 	this._boardGroup = null; //板子
-	this.sprites = {}; //精灵族
+	this.sprites = {}; 
     this._fontStyle = null; 
 	Bridge._position = 0;
     Bridge._scoreText = null;
@@ -19,29 +19,25 @@ Bridge.Game.prototype = {
 		this.sprites.background = background;
 		var water = this.add.sprite(0, Bridge.GAME_HEIGHT-370, 'water'); //水
 		this.sprites.water = water;
-		var cloud = this.add.sprite(50,0,'cloud');
+		var cloud = this.add.sprite(50,0,'cloud'); //云
 		this.sprites.cloud = cloud;
 		var score = this.add.sprite(10, 5, 'score-bg'); //得分
 		this.sprites.score = score;
-		var bgm = this.add.audio('bgm');
+		var bgm = this.add.audio('bgm'); //背景音乐
 		this.sprites.bgm = bgm;
 		this.sprites.bgm.play();
-		var fallwater = this.add.audio('fallwater');
+		var fallwater = this.add.audio('fallwater'); //落水声
 		this.sprites.fallwater = fallwater;
-		//this._player = this.add.sprite(5, 760, 'chick-idle');
-		//this._player.animations.add('idle', [0,1,2,3,4,5,6,7,8,9,10,11,12], 10, true);  //待修改，站着的动画
-		//this._player.animations.play('idle'); //站着的动画
   
-		//this._spawnBridgeTimer = 0;
-		Bridge._health = 4; //小鸡仔的生命初始为3条命
+		Bridge._health = 4; //小鸡仔的生命初始为4条命
 		Bridge._position = Math.floor(0.1 * Bridge.GAME_WIDTH);
 		Bridge._score = 0;
 		Bridge._upSpeed = 10;
 		Bridge._rotationSpeed = 0.314159;
 		Bridge._chickSpeed = 10;
-		//this.add.sprite(Bridge._position,GAME_HEIGHT-160,'board');
 		
-		this._fontStyle = { //分数字体的设定
+		//分数字体的设定
+		this._fontStyle = { 
 			font: "40px Arial", 
 			fill: "#FFCC00", 
 			stroke: "#333", 
@@ -49,9 +45,7 @@ Bridge.Game.prototype = {
 			align: "center" 
 		};
 		Bridge._scoreText = this.add.text(120, 20, "0", this._fontStyle);
-  
-		
-		
+  				
 		this.sprites.chick = createChick(this);
 		this.sprites.board1 = spawnBoard(this);
 		this.sprites.board2 = spawnBoard(this,true);
@@ -59,70 +53,54 @@ Bridge.Game.prototype = {
 		
 		
 	},
-	update: function() { //管理游戏的主循环
-		//关卡时间
-/* 		this._spawnCandyTimer += this.time.elapsed;
-		if(this._spawnCandyTimer > 1000) {
-			this._spawnCandyTimer = 0;
-			Candy.item.spawnCandy(this);
-		} */
-		if(!Bridge._health){
-			//this.add.sprite((Bridge.GAME_WIDTH-345)/2, (Bridge.GAME_HEIGHT-271)/2, 'game-over');
-		}
+	//管理游戏的主循环
+	update: function() { 
 	},
+	//判断是否按下鼠标或者按屏幕
 	isDownInTheRightArea:function(){
-/* 		if(game.options.input=='touch'){
-			var minY=Math.round((1-game.options.touchPercent)*game.world.height);
-			if(game.input.activePointer.isDown&&game.input.activePointer.y>minY){
-				return true;
-			}
-			return false;
+		if(this.input.activePointer.isDown){
+			return true;
 		}
-		else{ */
-			if(this.input.activePointer.isDown){
-				return true;
-			}
-			return false;
-		}
-	//}
+		return false;
+	}
 };
 
 //创建两个板子
 function spawnBoard(game,flag) {
 	var spawnGap = Math.floor(Math.max(Math.random(),0.1)*(Bridge.GAME_HEIGHT-270)); //设置第二个桥的位置 
-	
+	//板子1
 	if(flag){
 		var board = game.add.sprite(Bridge._position + game.camera.x + spawnGap+84,Bridge.GAME_HEIGHT-250,'board');
 	}
+	//板子2
 	else{
 		var board = game.add.sprite(Bridge._position + game.camera.x,Bridge.GAME_HEIGHT-250,'board'); 
 	}
 	return board;
-	
-	//game.input.onDown.add(createBridge, this);
-	//console.log(this);
-	//bridge.events..add(this.removeBridge,this);
-    // ...
-    // ...
 };
-
+//对象：桥
 function createBridge(game){
+	//加载图片
 	var bridge = game.add.sprite(game.sprites.board1.x+84,Bridge.GAME_HEIGHT-250,'brick');
 	bridge.anchor=new PIXI.Point(0,1);
 	bridge.scale.setTo(0.3,0.3);
 	bridge.state='inactive';
-	bridge.cat=game.sprites.chick;
+	bridge.chick=game.sprites.chick;
+	
 	bridge.show=function(){
 		this.visible=true;
 	};
 	bridge.hide=function(){
 		this.visible=false;
 	};
+	//未激活状态
 	bridge.inactive=function(){};
+	//可增长状态
 	bridge.mount=function(){
 		this.height=this.height+Bridge._upSpeed;
 		game.sprites.chick.construct();
 	};
+	//下落状态
 	bridge.fall=function(){
 		if(this.rotation>=1.5707){
 			this.rotation=1.5707;
@@ -133,6 +111,7 @@ function createBridge(game){
 			this.rotation+=Bridge._rotationSpeed;
 		}
 	};
+	//落水状态
 	bridge.fallMore=function(){
 		if(this.rotation>=3.1414){
 			this.rotation=3.1414;
@@ -155,21 +134,22 @@ function createBridge(game){
 		}
 		this[this.state]();
 	};
+	//判定桥是否搭上第二块木板
 	bridge.hasRightSize=function(){
 		if(this.x+this.height>=game.sprites.board2.x&&this.x+this.height<game.sprites.board2.x+84){
 			return true;
 		}
 		else{
-			//console.log(false);
 			return false;
 		}
 	};
+	//用于获取桥尾部的横坐标
 	bridge.getEnd=function(){
 		return this.x+this.height;
 	};
 	return bridge;
 };
-
+//对象：小鸡
 function createChick(game){
 	var chick = game.add.sprite(Bridge._position,Bridge.GAME_HEIGHT-250-60,'chick'); //设定鸡的初始位置（要改！）
 	chick.scale.setTo(0.4,0.4);
@@ -177,16 +157,13 @@ function createChick(game){
 	chick.animations.add('run',[0,1,2],15,true);
 	chick.animations.add('construct',[3,4],15,true);
 	chick.state='stop';
+	//自由落体状态
 	chick.construct=function(){
 		this.animations.play('construct');
-		//game.sprites.crcrcr.play();
 	};
+	//跑动状态
 	chick.run=function(){
 		this.animations.play('run');
-/* 		game.state.getCurrentState().livesText.x+=game.options.catSpeed;
-		game.state.getCurrentState().durationText.x+=game.options.catSpeed;
-		game.state.getCurrentState().scoreText.x+=game.options.catSpeed;
-		game.state.getCurrentState().levelText.x+=game.options.catSpeed; */
 		this.x += Bridge._chickSpeed;
 		game.sprites.background.x += Bridge._chickSpeed;
 		game.sprites.water.x += Bridge._chickSpeed;
@@ -201,23 +178,6 @@ function createChick(game){
 		game.camera.x = this.x - Bridge._position;
 		if(game.sprites.board2.x<=this.x&&game.sprites.bridge.hasRightSize()){
 			this.state='stop';
-			//game.sprites.miaou.play('',2.5);
-			//game.state.getCurrentState().score=game.state.getCurrentState().score+game.options.pointPerBridge;
-			//game.score=game.score+game.options.pointPerBridge;
-			//game.state.getCurrentState().scoreText.text=game.options.scoreText+game.state.getCurrentState().score+game.options.scoreTextEnd;
-/* 			if(game.level==0&&game.state.getCurrentState().score>=game.options.pointsToLevel1){
-				game.level=1;
-				if(game.options.difficulty+game.options.difficultyPerLevel<10){
-					game.options.difficulty+=game.options.difficultyPerLevel;
-				}
-			}
-			else if(game.state.getCurrentState().score>=(game.level+1)*game.options.percentToLevelUp*100&&game.level>=1){
-				game.level++;
-				if(game.options.difficulty+game.options.difficultyPerLevel<10){
-					game.options.difficulty+=game.options.difficultyPerLevel;
-				}
-			} 
-			game.state.getCurrentState().levelText.text=game.options.levelText+game.level+game.options.levelTextEnd; */
 			game.sprites.board1.destroy();
 			game.sprites.board1=game.sprites.board2;
 			game.sprites.board2=spawnBoard(game,true);
@@ -226,44 +186,47 @@ function createChick(game){
 			Bridge._score += 5;
 			Bridge._scoreText.setText(Bridge._score);
 		}
+		//若没搭上第二块木板，且小鸡不在行走到了木板的尾端，则开始下落
 		else if(!game.sprites.bridge.hasRightSize()&&game.sprites.bridge.getEnd()-this.width<=this.x){
 			this.state='fall';
 			
 			game.sprites.fallwater.play();
-			console.log("play");
 			Bridge._score -= 10;
 			Bridge._scoreText.setText(Bridge._score);
 		}
 	};
+	//静止状态
 	chick.stop=function(){
 		this.animations.play('stop');
 	};
+	//落水状态
 	chick.fall=function(){
-		
-		this.y=this.y+10;
-		this.animations.play('construct');
-		game.sprites.bridge.state='fallMore';
-		if(this.y > Bridge.GAME_HEIGHT){
+		if(this.y <= Bridge.GAME_HEIGHT){
+			this.y=this.y+10;
+			this.animations.play('construct');
+			game.sprites.bridge.state='fallMore';
+		}
+		//当小鸡掉出画面则执行惩罚操作
+		else{
 			Bridge._health--;
-			//game.state.getCurrentState().livesText.text=game.options.livesText+game.state.getCurrentState().lives+game.options.livesTextEnd;
-			if(Bridge._score < 0 || Bridge._health<= 0){
+			if(Bridge._score < 0 || Bridge._health <= 0){
+				this.state = 'stop';
 				game.add.sprite(((Bridge.GAME_WIDTH - 345)/2 + game.camera.x), (Bridge.GAME_HEIGHT-271)/2 - 40, 'game-over');
 				game.add.button(((Bridge.GAME_WIDTH - 363)/2 + game.camera.x),Bridge.GAME_HEIGHT - 250,'button-restart', function(){game.state.start('Game');}, game,1,0,2);
 				game.sprites.bgm.destroy();
-				//game.state.start('Game');
 			}
 			else{this.state='respawn';}
 		}
 	};
+	//重建状态
 	chick.respawn=function(){
-		this.y=Bridge.GAME_HEIGHT-250-60;
-		game.sprites.board2.x=this.x;
+		this.y = Bridge.GAME_HEIGHT - 250 - 60;
+		game.sprites.board2.x = this.x;
 		game.sprites.board1.destroy();
-		game.sprites.board1=game.sprites.board2;
-		game.sprites.board2=spawnBoard(game,true);
+		game.sprites.board1 = game.sprites.board2;
+		game.sprites.board2 = spawnBoard(game,true);
 		game.sprites.bridge.destroy();
-		game.sprites.bridge=createBridge(game);
-		//game.sprites.bgm.pause();
+		game.sprites.bridge = createBridge(game);
 		this.state='stop';
 	};
 	chick.update=function(){
