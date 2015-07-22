@@ -13,11 +13,12 @@
 <body>
 <script>
 (function() {
-    var game = new Phaser.Game(600, 400, Phaser.AUTO, 'game');
+    var game = new Phaser.Game(1024, 696, Phaser.AUTO, 'game');
     game.state.add('Boot', Bridge.Boot); //配置
     game.state.add('Preloader', Bridge.Preloader); //加载资源
     game.state.add('MainMenu', Bridge.MainMenu); //主菜单
     game.state.add('Game', Bridge.Game); //游戏主循环
+	game.sprites={};
     game.state.start('Boot');
 })();
 </script>

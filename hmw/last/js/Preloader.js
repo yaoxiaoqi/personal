@@ -1,6 +1,6 @@
 Bridge.Preloader = function(game){
-    Bridge.GAME_WIDTH = 600;
-    Bridge.GAME_HEIGHT = 400;
+    Bridge.GAME_WIDTH = 1024;
+    Bridge.GAME_HEIGHT = 696;
 };
 Bridge.Preloader.prototype = {
     preload: function() {
@@ -10,15 +10,21 @@ Bridge.Preloader.prototype = {
   
         this.load.image('background', 'img/background.jpg');
         this.load.image('water', 'img/water.png');
-        //this.load.image('chick-cover', 'img/chick-cover.png'); //首页的鸡
-        //this.load.image('title', 'img/title.png');
-        //this.load.image('game-over', 'img/gameover.png');
-        //this.load.image('score-bg', 'img/score-bg.png');
-		this.load.image('board', 'img/board.jpg'); //板子
+        this.load.image('cloud', 'img/cloud.png'); //首页的鸡
+        this.load.image('title', 'img/title.png');
+        this.load.image('game-over', 'img/gameover.png');
+        this.load.image('score-bg', 'img/score-bg.png');
+		this.load.image('brick','img/brick.png');
+		this.load.image('board', 'img/board.png'); //板子
+		
+		this.load.audio('bgm','music/bgm.mp3');
+		this.load.audio('fallwater','music/fallwater.wav');
 		
 		//需要动画的放这里！
         //this.load.spritesheet('monster-idle','img/monster-idle.png', 103, 131);
+		this.load.spritesheet('button-restart','img/button-restart.png', 363, 131);
         this.load.spritesheet('button-start','img/button-start.png', 401, 143);
+		this.load.spritesheet('chick','img/chick.png',186,152);
     },
     create: function() {
         this.state.start('MainMenu');
