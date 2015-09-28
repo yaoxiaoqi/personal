@@ -2,31 +2,33 @@ var gridSize = 10;
 var gridCnt = 100;
 var isStart = false;
 var map;
-var aroundCnt;
+var preMap;
 var loop;
+var lineColor = "#eeeeee";
+var aliveColor = "#ffc0cb";
+var deadColor = "#000000";
 map = new Array(gridCnt);
-aroundCnt = new Array(gridCnt);
+preMap = new Array(gridCnt);
 for (var i = 0;i < gridCnt;i++){
 	map[i] = new Array(gridCnt);
-	aroundCnt[i] = new Array(gridCnt);
+	preMap[i] = new Array(gridCnt);
 }
 
+/*init map*/
 for(var i = 0;i < gridCnt;i++){
 	for(var j = 0;j < gridCnt;j++){
 		map[i][j] = 0;
-		aroundCnt[i][j] = 0;
+		preMap[i][j] = -1;
 	}
 }
 var c = document.getElementById("myCanvas");
 var cxt = c.getContext("2d");
-cxt.fillStyle = "#000000";
+paintLine();
+initMap();
 paint();
 
-
-function paint() {
-	cxt.save();
-    cxt.fillStyle = "#000000";
-	cxt.strokeStyle = "#eeeeee";
+function paintLine(){
+	cxt.strokeStyle = lineColor;
     for (var i = 0; i <= gridCnt; i++) {
         cxt.moveTo(0, i * gridSize);
         cxt.lineTo(gridSize * gridCnt, i * gridSize);
@@ -36,17 +38,22 @@ function paint() {
         cxt.lineTo(i * gridSize, gridSize * gridCnt);
     }
     cxt.stroke();
+}
+
+/*paint map*/
+function paint() {
+	cxt.save();
     for (var x = 0; x < map.length; x++) {
         for (var y = 0; y < map[x].length; y++) {
-			if(aroundCnt[x][y] === 2){
+			if(map[x][y] === preMap[x][y]){
 				continue;
 			}
             if (map[x][y] == 1) {
-				cxt.fillStyle = "#ffc0cb";
+				cxt.fillStyle = aliveColor;
                 cxt.fillRect(y * gridSize + 1, x * gridSize + 1, gridSize - 2, gridSize - 2);
             }
 			else{
-				cxt.fillStyle = "#000000";
+				cxt.fillStyle = deadColor;
 				cxt.fillRect(y * gridSize + 1, x * gridSize + 1, gridSize - 2, gridSize - 2);
 			}
         }
@@ -59,6 +66,18 @@ function mouseClick(event) {
     var x = parseInt((event.offsetY) / gridSize);
     map[x][y] = !map[x][y];
     paint();
+}
+
+/*randomize map*/
+function initMap(){
+	map[25][50] = 1;
+	map[26][49] = 1;
+	map[26][50] = 1;
+	map[26][51] = 1;
+	map[27][50] = 1;
+	map[28][49] = 1;
+	map[28][50] = 1;
+	map[28][51] = 1;
 }
 
 function judge(){
@@ -77,35 +96,30 @@ function judge(){
 			}
 		}
 	}
-	return lifecnt;
+	if(lifecnt === 3){
+		return 1;
+	}
+	else if(lifecnt === 2){
+		return map[gridx][gridy];
+	}
+	else{
+		return 0;
+	}
 }
 
+/*change state*/
 function change(){
 	for (var i = 0;i < gridCnt;i++){
 		for(var j = 0;j < gridCnt;j++){
-			aroundCnt[i][j] = judge(i,j);
+			preMap[i][j] = judge(i,j);
 		}
 	}
+	var temp;
 	for (var i = 0;i < gridCnt;i++){
 		for(var j = 0;j < gridCnt;j++){
-			if(aroundCnt[i][j] === 3){
-				if(map[i][j] === 1){
-					aroundCnt[i][j] = 2;
-				}
-				else{
-					map[i][j] = 1;
-				}
-			}
-			else if(aroundCnt[i][j] === 2){
-			}
-			else{
-				if(map[i][j] === 0){
-					aroundCnt[i][j] = 2;
-				}
-				else{
-					map[i][j] = 0;
-				}	
-			}
+			temp = map[i][j];
+			map[i][j] = preMap[i][j];
+			preMap[i][j] = temp;
 		}
 	}
 }
@@ -121,16 +135,31 @@ function stop(){
 	clearInterval(loop);
 }
 
- $(function(){   
-      $(document).keypress(function (e) {
-	  if (e.keyCode == 13){
-        isStart = !isStart;
-		if(isStart){
-			start();
+
+
+/*press Enter key to start or pause*/
+$(function(){  
+	$(document).keydown(function (e) {
+		if (e.keyCode == 13){
+			isStart = !isStart;
+			if(isStart){
+				start();
+			}
+			if(!isStart){
+				stop();
+			}
 		}
-		if(!isStart){
+		else if (e.keyCode == 27) {
+			isStart = false;
 			stop();
+			for (var i = 0; i < gridCnt; i++) {
+				for (var j = 0; j < gridCnt; j++) {
+					map[i][j] = 0;
+					preMap[i][j] = -1;
+				}
+			}
+			paint();
+			
 		}
-	  }
-     })
+	})
  });
