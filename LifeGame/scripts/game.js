@@ -1,8 +1,9 @@
 var gridSize = 10;
 var gridCnt = 100;
-
+var isStart = false;
 var map;
 var aroundCnt;
+var loop;
 map = new Array(gridCnt);
 aroundCnt = new Array(gridCnt);
 for (var i = 0;i < gridCnt;i++){
@@ -20,7 +21,7 @@ var c = document.getElementById("myCanvas");
 var cxt = c.getContext("2d");
 cxt.fillStyle = "#000000";
 paint();
-<!-- 主绘制函数 -->
+
 
 function paint() {
 	cxt.save();
@@ -110,9 +111,26 @@ function change(){
 }
 
 function start() {
-    setTimeout(function () {
+    loop = setInterval(function () {
 		change();
         paint();
-        setTimeout(arguments.callee, 100);
     }, 100);
 }
+
+function stop(){
+	clearInterval(loop);
+}
+
+ $(function(){   
+      $(document).keypress(function (e) {
+	  if (e.keyCode == 13){
+        isStart = !isStart;
+		if(isStart){
+			start();
+		}
+		if(!isStart){
+			stop();
+		}
+	  }
+     })
+ });
