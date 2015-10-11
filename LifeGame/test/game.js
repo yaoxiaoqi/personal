@@ -101,15 +101,15 @@ var isNumber = function (str){
 
 var isCorrectFormat = function (gridCnt,fRate,lifeDens){
 	if(!isPositiveInt(gridCnt) || parseInt(gridCnt)<20||parseInt(gridCnt)>110){
-		alert("网格规模应为20-110的正整数");
+		//alert("网格规模应为20-110的正整数");
 		return false;
 	}
 	if(!isNumber(fRate) ||parseFloat(fRate)<=0){
-		alert("帧率应为大于0的正数");
+		//alert("帧率应为大于0的正数");
 		return false;
 	}
 	if(!isNumber(lifeDens) || parseFloat(lifeDens) < 0||parseFloat(lifeDens)>1){
-		alert("活细胞密度应为0-1的正数");
+		//alert("活细胞密度应为0-1的正数");
 		return false;
 	}
 	return true;
@@ -180,6 +180,7 @@ var judge = function (x,y){
 		return 1;
 	}
 	else if(lifecnt === 2){
+		console.log("yo");
 		return map[x][y];
 	}
 	else{
